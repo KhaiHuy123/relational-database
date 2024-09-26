@@ -1,7 +1,7 @@
-# relational-database
+## relational-database
 - [certificate] - [freeCodeCamp] - [Oct 2024]
 
-# list of projects
+## list of projects
 
 | name | repository |
 |---|---|
