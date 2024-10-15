@@ -8,9 +8,15 @@ search_element() {
     QUERY_STATEMENT="atomic_number,atomic_mass,symbol,name,type,melting_point_celsius,boiling_point_celsius"
   # the input can be the atomic number or the symbol of expected element 
   if [[ $(expr "$INPUT_ARG" : "^[0-9]*$") -gt 0 ]]; then
-    SEARCH_RESULT=$($PSQL "SELECT $QUERY_STATEMENT FROM elements LEFT JOIN properties USING (atomic_number) LEFT JOIN types USING (type_id) WHERE atomic_number=$INPUT_ARG")
+    SEARCH_RESULT=$($PSQL "
+    SELECT $QUERY_STATEMENT 
+    FROM elements LEFT JOIN properties USING (atomic_number) 
+    LEFT JOIN types USING (type_id) WHERE atomic_number=$INPUT_ARG")
   else
-    SEARCH_RESULT=$($PSQL "SELECT $QUERY_STATEMENT FROM elements LEFT JOIN properties USING (atomic_number) LEFT JOIN types USING (type_id) WHERE symbol='$INPUT_ARG' OR name='$INPUT_ARG'")
+    SEARCH_RESULT=$($PSQL "
+    SELECT $QUERY_STATEMENT 
+    FROM elements LEFT JOIN properties USING (atomic_number) 
+    LEFT JOIN types USING (type_id) WHERE symbol='$INPUT_ARG' OR name='$INPUT_ARG'")
   fi
   # if input can not be found, exit the script
   if [[ -z $SEARCH_RESULT ]]; then

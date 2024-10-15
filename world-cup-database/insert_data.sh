@@ -48,3 +48,6 @@ done
 # hint :
 # when inserting data, we should insert data into child table before inserting data into parent table 
 # in this database, games is parent table, teams is child table
+
+# When using the insert into command, we do not necessarily have to arrange the columns in the correct order in the table 
+# Just make sure each column receives the correct and meaningful data type and value

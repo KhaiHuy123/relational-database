@@ -40,7 +40,9 @@ serving(){
   if [[ -z $CUSTOMER_NAME ]]; then
     printf "Your phone number does not exist in our system, what is your name?\n"
     read CUSTOMER_NAME
-    INSERT_NEW_CUSTOMER=$($PSQL "INSERT INTO customers(customer_id, phone, name) VALUES($NO_CUSTOMERS_APPOINTMENT, '$CUSTOMER_PHONE', '$CUSTOMER_NAME')")
+    INSERT_NEW_CUSTOMER=$($PSQL "
+    INSERT INTO customers(customer_id, phone, name) 
+    VALUES($NO_CUSTOMERS_APPOINTMENT, '$CUSTOMER_PHONE', '$CUSTOMER_NAME')")
   fi
 
   # ask for the time of the appointment
@@ -49,7 +51,9 @@ serving(){
 
   # arrange appointment
   CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
-  INSERT_APPOINTMENT=$($PSQL "INSERT INTO appointments(customer_id, service_id, appointment_id, time) VALUES($CUSTOMER_ID, $SERVICE_ID_SELECTED, $NO_CUSTOMERS_APPOINTMENT, '$SERVICE_TIME')")
+  INSERT_APPOINTMENT=$($PSQL "
+  INSERT INTO appointments(customer_id, service_id, appointment_id, time) 
+  VALUES($CUSTOMER_ID, $SERVICE_ID_SELECTED, $NO_CUSTOMERS_APPOINTMENT, '$SERVICE_TIME')")
   printf "I have put you down for a $SERVICE_NAME at $SERVICE_TIME, $CUSTOMER_NAME.\n"
   return 0
 }
@@ -67,4 +71,3 @@ while true; do
   fi
   ((NO_CUSTOMERS_APPOINTMENT++))
 done
-
